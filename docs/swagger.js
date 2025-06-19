@@ -8,7 +8,7 @@ const options = {
       version: '1.0.0',
       description: 'API for user registration, login, token handling and user CRUD operations',
     },
-    servers: [{ url: 'http://localhost:5000' }],
+    servers: [{ url: 'https://rest-api-pq0n.onrender.com' }],
     components: {
       securitySchemes: {
         bearerAuth: {
