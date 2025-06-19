@@ -17,7 +17,11 @@ mongoose.connect("mongodb+srv://Krishnapriya:krishna123@cluster0.dbdfr76.mongodb
 {
     console.log(err);
 });
-
+app.get("/",(req,res)=>
+{
+    console.log("Working")
+    res.redirect("/api-docs");
+});
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 
