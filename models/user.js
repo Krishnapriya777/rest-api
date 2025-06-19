@@ -17,10 +17,14 @@ const userSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  isverified:
+  {
+    type:Boolean,
+    default:false
   }
 },
 {
     timestamps:true
 });
-
 module.exports = mongoose.model('User', userSchema);
