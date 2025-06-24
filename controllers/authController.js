@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const multer=require("multer");
+const path=require("path");
 const sendEmail = require("../utils/sendEmail");
 const JWT_SECRET = 'kpkp';
 const REFRESH_TOKEN_SECRET = 'refresh-secret';
@@ -15,7 +16,7 @@ const storage=multer.diskStorage(
     },
     filename:(req,file,cb)=>
     {
-      const ext=path.extname(file.orginalname);
+      const ext=path.extname(file.originalname);
       cb(null,Date.now()+ext);
 
     },
@@ -178,3 +179,4 @@ exports.verifyEmail = async (req, res) => {
     res.status(400).send("Invalid or expired token.");
   }
 };
+exports.upload=upload;
