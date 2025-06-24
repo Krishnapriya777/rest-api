@@ -1,16 +1,32 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+const multer=require("multer");
 const sendEmail = require("../utils/sendEmail");
 const JWT_SECRET = 'kpkp';
 const REFRESH_TOKEN_SECRET = 'refresh-secret';
 
 let refreshTokens = []; 
+const storage=multer.diskStorage(
+  {
+    destination:(req,file,cb)=>
+    {
+      cb(null,'uploads/');
+    },
+    filename:(req,file,cb)=>
+    {
+      const ext=path.extname(file.orginalname);
+      cb(null,Date.now()+ext);
+
+    },
+    
+  }
+);
+const upload=multer({storage});
 exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-
-
+    const profilepicpath=req.file?req.file.path:null;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({ message: 'Invalid email format' });
@@ -26,6 +42,7 @@ exports.register = async (req, res) => {
       email,
       password: hashedPassword,
       isverified: false,
+      profilepic:profilepicpath,
     });
 
     const token = jwt.sign({ id: newUser._id }, JWT_SECRET, { expiresIn: '1h' });

@@ -37,7 +37,7 @@ specs.paths = {
       requestBody: {
         required: true,
         content: {
-          'application/json': {
+          'multipart/form-data': {
             schema: {
               type: 'object',
               required: ['name', 'email', 'password'],
@@ -45,6 +45,7 @@ specs.paths = {
                 name: { type: 'string' },
                 email: { type: 'string' },
                 password: { type: 'string' },
+                profilepic:{type:'string',format:'binary'}
               },
             },
           },

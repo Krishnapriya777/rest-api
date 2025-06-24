@@ -27,7 +27,7 @@ app.get("/",(req,res)=>
 });
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
-
+app.use('/uploads', express.static('uploads'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Start server

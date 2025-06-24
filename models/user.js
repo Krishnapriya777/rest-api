@@ -22,6 +22,11 @@ const userSchema = new mongoose.Schema({
   {
     type:Boolean,
     default:false
+  },
+  profilepic:
+  {
+    type:String,
+    default:''
   }
 },
 {
