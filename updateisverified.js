@@ -5,8 +5,8 @@ mongoose.connect("mongodb+srv://Krishnapriya:krishna123@cluster0.dbdfr76.mongodb
         console.log('connected to database')
         const result = await users.updateMany
             (
-                { isverified: { $exists: false } },
-                { $set: { isverified: false } }
+                { profilepic: { $exists: false } },
+                { $set: { profilepic:null} }
             );
 
         console.log(`${result.modifiedCount} documents updated`);
