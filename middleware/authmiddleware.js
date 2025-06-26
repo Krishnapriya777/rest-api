@@ -7,15 +7,15 @@ const auth = (req, res, next) => {
     }
     const token = authHeader.split(' ')[1];
     try {
-        //const decoded = jwt.decode(token); // No signature check, just see what's inside
+        //const decoded = jwt.decode(token);
         //console.log(decoded);
 
-        const decoded = jwt.verify(token, JWT_SECRET); // Verifies if token is valid and signed by your secret
+        const decoded = jwt.verify(token, JWT_SECRET); 
         req.user = decoded;
         
         next();
     } catch (err) {
-        console.log(err);
+        console.log(err);  
         return res.status(401).json({ message: "Unauthorized: Invalid token provided" });
     }
 };

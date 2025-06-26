@@ -33,31 +33,26 @@ exports.register = async (req, res) => {
     console.log("REQ BODY:", req.body);
 
     const { name, email, password } = req.body;
-    // Get the path of the uploaded profile picture
     const profilepicpath = req.file ? req.file.path : null;
-
-    // Email format validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({ message: 'Invalid email format' });
     }
 
-    // Check if user already exists
+
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Hash the password before saving
-    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create a new user in the database
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({
       name,
       email,
       password: hashedPassword,
-      isverified: false, // User is not verified until email confirmation
-      profilepic: profilepicpath, // Save the path to the profile picture
+      isverified: false, 
+      profilepic: profilepicpath, 
     });
 
     // Generate JWT for email verification
@@ -70,17 +65,17 @@ exports.register = async (req, res) => {
       await sendEmail(email, 'Verify your email', html);
     } catch (emailError) {
       console.error("Error sending verification email:", emailError);
-      // If email sending fails, delete the newly created user to prevent orphaned accounts
+      
       await User.findByIdAndDelete(newUser._id);
       return res.status(400).json({ message: 'Invalid email address or email service error. Registration failed.' });
     }
 
-    // Respond with success message
+  
     res.status(201).json({
       message: 'User registered. Please check your email to verify your account.',
     });
   } catch (error) {
-    // Log the actual error for debugging
+    
     console.error("Error during user registration:", error);
     res.status(500).json({ message: 'Internal server error during registration', error: error.message });
   }
